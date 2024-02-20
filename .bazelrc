@@ -1,0 +1,20 @@
+# ------ ALL SETTINGS ------
+
+run --jobs=3
+build --jobs=3
+test --jobs=3
+coverage --jobs=3
+
+# ------ TEST & COVERAGE SETTINGS ------
+
+# === MEMORY ANALYSIS ===
+
+# using valgrind
+run:valgrind --run_under="valgrind --leak-check=full --show-leak-kinds=all"
+test:valgrind --run_under="valgrind --leak-check=full --show-leak-kinds=all"
+coverage:valgrind --run_under="valgrind --leak-check=full --show-leak-kinds=all"
+
+# using asan
+run:asan --linkopt -fsanitize=address
+test:asan --linkopt -fsanitize=address
+coverage:asan --linkopt -fsanitize=address
