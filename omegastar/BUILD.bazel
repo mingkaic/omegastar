@@ -26,7 +26,14 @@ filegroup(
 cc_library(
     name = "omegastar",
     hdrs = [":omegastar_hdrs"],
+    visibility = ["//visibility:public"],
+)
+
+cc_library(
+    name = "omegastar_uuid",
+    hdrs = [":omegastar_hdrs"],
     deps = ["@boost//:uuid"],
+	defines = ["ENABLE_BOOST_UUID"],
     visibility = ["//visibility:public"],
 )
 
@@ -37,6 +44,15 @@ cc_test(
     srcs = TEST_SRCS,
     deps = [
         "//omegastar",
+        "@gtest//:gtest",
+    ],
+)
+
+cc_test(
+    name = "test_uuid",
+    srcs = TEST_SRCS,
+    deps = [
+        "//omegastar:omegastar_uuid",
         "@gtest//:gtest",
     ],
 )

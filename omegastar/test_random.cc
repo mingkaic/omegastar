@@ -9,7 +9,7 @@
 #include "omegastar/random.h"
 
 
-TEST(ENGINE, Rand)
+TEST(ENGINE, RandInt)
 {
 	typename omegastar::iGenerator::ptr_t engine = std::make_shared<omegastar::Randomizer>();
 
@@ -30,6 +30,13 @@ TEST(ENGINE, Rand)
 		EXPECT_LT(75, b);
 		EXPECT_GT(125, b);
 	}
+}
+
+
+TEST(ENGINE, RandString)
+{
+	typename omegastar::iGenerator::ptr_t engine = std::make_shared<omegastar::Randomizer>();
+	std::cout << engine->get_str() << std::endl;
 }
 
 
