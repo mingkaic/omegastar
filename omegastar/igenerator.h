@@ -20,6 +20,8 @@ struct iGenerator
 	/// Return random string
 	virtual std::string get_str (void) const = 0;
 
+	virtual size_t operator() (void) = 0;
+
 	template <typename T, std::enable_if_t<std::is_integral<T>::value,bool> = true>
 	inline T uniform (const T& l, const T& r) const
 	{

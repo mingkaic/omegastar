@@ -20,6 +20,11 @@ struct Randomizer final : public iRandGenerator
 {
 	Randomizer (void) : rengine_(std::random_device()()) {}
 
+	size_t operator() (void) override
+	{
+		return rengine_();
+	}
+
 	/// Implementation of iGenerator
 	int64_t unif_int (const int64_t& lower, const int64_t& upper) const override
 	{
