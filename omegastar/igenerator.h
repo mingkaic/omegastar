@@ -20,8 +20,6 @@ struct iGenerator
 	/// Return random string
 	virtual std::string get_str (void) const = 0;
 
-	virtual size_t operator() (void) = 0;
-
 	template <typename T, std::enable_if_t<std::is_integral<T>::value,bool> = true>
 	inline T uniform (const T& l, const T& r) const
 	{
@@ -62,12 +60,23 @@ struct iGenerator
 		const double& mean, const double& stdev) const = 0;
 };
 
+template <class GENERATOR>
 struct iRandGenerator : public iGenerator
 {
+	using ptr_t = std::shared_ptr<iRandGenerator>;
+
+	using generator_t = GENERATOR;
+
+	static constexpr size_t max (void) { return GENERATOR::max(); }
+
+	static constexpr size_t min (void) { return GENERATOR::min(); }
+
 	virtual ~iRandGenerator (void) = default;
 
 	/// Seed the random engine using seed specified
 	virtual void seed (size_t s) = 0;
+
+	virtual size_t operator() (void) = 0;
 };
 
 }

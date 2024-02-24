@@ -16,14 +16,15 @@
 namespace omegastar
 {
 
-struct Randomizer final : public iRandGenerator
+struct Randomizer final : public iRandGenerator<std::mt19937>
 {
-	Randomizer (void) : rengine_(std::random_device()()) {}
+	using generator_t = std::mt19937;
 
-	size_t operator() (void) override
-	{
-		return rengine_();
-	}
+	static constexpr size_t max (void) { return generator_t::max(); }
+
+	static constexpr size_t min (void) { return generator_t::min(); }
+
+	Randomizer (void) : rengine_(std::random_device()()) {}
 
 	/// Implementation of iGenerator
 	int64_t unif_int (const int64_t& lower, const int64_t& upper) const override
@@ -82,7 +83,13 @@ struct Randomizer final : public iRandGenerator
 		rengine_.seed(s);
 	}
 
-	mutable std::mt19937 rengine_;
+	/// Implementation of iRandGenerator
+	size_t operator() (void) override
+	{
+		return rengine_();
+	}
+
+	mutable generator_t rengine_;
 
 #ifdef ENABLE_BOOST_UUID
 	/// Implementation of iGenerator
