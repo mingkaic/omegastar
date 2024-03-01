@@ -89,7 +89,10 @@ struct Randomizer final : public iRandGenerator<std::mt19937>
 		return rengine_();
 	}
 
-	mutable generator_t rengine_;
+	generator_t& get_internal (void) override
+	{
+		return rengine_;
+	}
 
 #ifdef ENABLE_BOOST_UUID
 	/// Implementation of iGenerator
@@ -112,6 +115,9 @@ struct Randomizer final : public iRandGenerator<std::mt19937>
         return ss.str();
 	}
 #endif // ENABLE_BOOST_UUID
+
+private:
+	mutable generator_t rengine_;
 };
 
 }

@@ -67,6 +67,8 @@ struct iRandGenerator : public iGenerator
 
 	using generator_t = GENERATOR;
 
+	using result_type = typename GENERATOR::result_type;
+
 	static constexpr size_t max (void) { return GENERATOR::max(); }
 
 	static constexpr size_t min (void) { return GENERATOR::min(); }
@@ -77,6 +79,8 @@ struct iRandGenerator : public iGenerator
 	virtual void seed (size_t s) = 0;
 
 	virtual size_t operator() (void) = 0;
+
+	virtual GENERATOR& get_internal (void) = 0;
 };
 
 }
